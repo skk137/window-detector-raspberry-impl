@@ -1,0 +1,22 @@
+# Αυτόματη εκκίνηση της ανίχνευσης σε κάθε εκκίνηση του Raspberry Pi (systemd).
+# Εγκατάσταση και χρήση: βλ. README.txt, ενότητα "ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ".
+# Αν ο χρήστης ή ο φάκελος είναι διαφορετικοί, άλλαξε τα User, WorkingDirectory και ExecStart.
+
+[Unit]
+Description=Window detector (Sense HAT magnetometer)
+
+[Service]
+User=skk
+WorkingDirectory=/home/skk/Desktop/rasberry
+# Η Python του venv (ίδιες βιβλιοθήκες με την εφαρμογή), με την πιο πρόσφατη βαθμονόμηση
+ExecStart=/home/skk/wd-venv/bin/python window_detector.py --detect latest
+# Τα μηνύματα εμφανίζονται αμέσως στο journalctl
+Environment=PYTHONUNBUFFERED=1
+# Το stop στέλνει Ctrl+C: το πρόγραμμα κλείνει σωστά το CSV και σβήνει τα LED
+KillSignal=SIGINT
+# Αν σταματήσει από σφάλμα (π.χ. αισθητήρας, καμία βαθμονόμηση), ξαναξεκινά σε 30 s
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

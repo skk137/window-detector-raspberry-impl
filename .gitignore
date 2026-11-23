@@ -1,0 +1,8 @@
+# Τα υπόλοιπα (docx, README, Screenshots, figures, analysis, calibrations, logs), υπάρχουν τοπικά στο rasberry, εαν χρειαστούν.
+*
+!.gitignore
+!app.py
+!window_detector.py
+!models.py
+!compare_models.py
+!window-detector.service
